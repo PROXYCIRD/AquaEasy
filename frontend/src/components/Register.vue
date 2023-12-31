@@ -1,24 +1,22 @@
 <template>
     <div id="container">
         <div id="login-panel">
-            <h1>LOGIN</h1>
+            <h1>Sign In</h1>
             <h4>Water Quality Monitoring</h4>
 
             <div id="login-form">
                 <h4>Username</h4>
-                <input type="text" placeholder="Enter your username..." v-model="username">
+                <input type="text" placeholder="Enter your username...">
 
                 <h4>Password</h4>
-                <input type="password" placeholder="Enter your password..." v-model="password">
-            </div>
+                <input type="password" placeholder="Enter your password...">
 
-            <div id="forgot-section">
-                <h5 id="forgot-pass">Forgot Password?</h5>
+                <h4>Confirm Password</h4>
+                <input type="password" placeholder="Confirm your password...">
             </div>
 
             <div id="interactivity-section">
-                <button @click="login()">Login</button>
-                <h5 id="sign-up" @click="() => { this.$router.push('/register') }">Don't have an account? Sign up.</h5>
+                <button>Sign In</button>
             </div>
         </div>
     </div>
@@ -26,21 +24,7 @@
 
 <script>
 export default {
-    name: 'LoginPage',
-    methods: {
-        login(){
-            console.log(this.username);
-            console.log(this.password);
-
-            this.$router.push('Dashboard');
-        }
-    },
-    data(){
-        return {
-            username: '',
-            password: ''
-        }
-    }
+    name: 'RegisterPage',
 }
 </script>
 
@@ -79,7 +63,7 @@ export default {
 #login-form {
     height: 40%;
     width: 100%;
-    margin-top: 20%;
+    margin-top: 15%;
     align-items: center;
     justify-content: center;
 
@@ -96,13 +80,13 @@ export default {
     }
 }
 
-#interactivity-section {
-    height: 30%;
+#interactivity-section { 
     width: 100%;
+    margin-top: 30%;
     text-align: center;
     
     button {
-        height: 20%;
+        height: 5vh;
         width: 50%;
         background-color: #000;
         color: white;
@@ -116,12 +100,5 @@ export default {
         border: 1px solid black;
         color: black;
     }
-}
-
-#forgot-section {
-    width: 100%;
-    margin-top: -10%;
-    margin-bottom: 15%;
-    text-align: right;
 }
 </style>
