@@ -28,11 +28,29 @@
 export default {
     name: 'LoginPage',
     methods: {
-        login(){
-            console.log(this.username);
-            console.log(this.password);
+        async login(){
+            const response = await fetch(`http://127.0.0.1:8000/login?username=${this.username}&password=${this.password}`, {
+            // const response = await fetch('https://aquaeasy.onrender.com/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
 
-            this.$router.push('Dashboard');
+            if(response.ok){
+                const responseData = await response.json();
+                console.log(responseData.response);
+
+                if (responseData.response == 'Login successful.'){
+                    this.$router.push('/Dashboard');
+                }
+                else {
+                    console.log('Failed');
+                }
+            }
+            else {
+                console.log(`Request failed with status ${response.status}`);
+            }
         }
     },
     data(){

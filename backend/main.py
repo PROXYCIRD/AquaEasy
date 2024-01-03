@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
 from pydantic import BaseModel
@@ -7,6 +8,14 @@ import datetime as dt
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,6 +33,12 @@ class UserModel(BaseModel):
     username: str
     password: str
     email: str
+
+
+class RegisterModel(BaseModel):
+    username: str
+    password: str
+    confirm: str
 
 
 class LogModel(BaseModel):
@@ -49,20 +64,20 @@ async def login(username: str, password: str, db: Session = Depends(get_database
 
 
 @app.post('/register')
-async def register(user: UserModel, db: Session = Depends(get_database)):
+async def register(user: RegisterModel, db: Session = Depends(get_database)):
     try:
         existing_user = db.query(User).filter(User.username == user.username).first()
 
         if not existing_user:
-            new_user = User()
-            new_user.username = user.username
-            new_user.password = user.password
-            new_user.email = user.email
+            if user.password == user.confirm:
+                new_user = User()
+                new_user.username = user.username
+                new_user.password = user.password
 
-            db.add(new_user)
-            db.commit()
+                db.add(new_user)
+                db.commit()
 
-            return { 'response': 'Registration successful.', 'status_code': 200 }
+                return { 'response': 'Registration successful.', 'status_code': 200 }
         else:
             return { 'response': 'User already exists.', 'status_code': 403 }
     except:

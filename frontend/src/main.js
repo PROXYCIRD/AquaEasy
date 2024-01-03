@@ -2,9 +2,9 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import LoginPage from './components/Login.vue';
-import RegisterPage from './components/Register.vue';
-import DashboardPage from './components/Dashboard.vue';
+import LoginPage from './components/LoginPage.vue';
+import RegisterPage from './components/RegisterPage.vue';
+import DashboardPage from './components/DashboardPage.vue';
 
 const app = createApp(App);
 
