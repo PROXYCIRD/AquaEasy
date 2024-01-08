@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from database import SessionLocal, engine, Base
 from pydantic import BaseModel
 from models import User, Log
 import datetime as dt
+import random as rd
 
 
 app = FastAPI()
@@ -39,15 +41,28 @@ class RegisterModel(BaseModel):
     username: str
     password: str
     confirm: str
+    first_name: str
+    last_name: str
+    contact: str
+    email: str
 
 
 class LogModel(BaseModel):
     turbidity: int
     humidity: int
     tds: int
+    ec: int
     user_id: int
 
 
+@app.get('/show_users')
+async def show_users(db: Session = Depends(get_database)):
+    try:
+        all_users = db.query(User).all()
+        return { 'response': 'User Retrieval Success', 'users': all_users, 'status_code': 200 }
+    except:
+        return { 'response': 'User Retrieval Failed', 'status_code': 200 }
+    
 
 @app.post('/login')
 async def login(username: str, password: str, db: Session = Depends(get_database)):
@@ -56,7 +71,7 @@ async def login(username: str, password: str, db: Session = Depends(get_database
 
         if existing_user:
             if existing_user.password == password:
-                return { 'response': 'Login successful.', 'status_code': 200 }
+                return { 'response': 'Login successful.', 'user_data': existing_user, 'status_code': 200 }
             else:
                 return { 'response': 'Login failed.', 'status_code': 403 }
     except:
@@ -73,6 +88,10 @@ async def register(user: RegisterModel, db: Session = Depends(get_database)):
                 new_user = User()
                 new_user.username = user.username
                 new_user.password = user.password
+                new_user.first_name = user.first_name
+                new_user.last_name = user.last_name
+                new_user.contact = user.contact
+                new_user.email = user.email
 
                 db.add(new_user)
                 db.commit()
@@ -89,7 +108,7 @@ async def insert_log(log: LogModel, db: Session = Depends(get_database)):
     try:
         new_entry = Log()
         new_entry.turbidity = log.turbidity
-        new_entry.humidity = log.humidity 
+        new_entry.ph = log.humidity 
         new_entry.tds = log.tds
         new_entry.date_created = dt.datetime.now()
         new_entry.record_owner = log.user_id
@@ -102,6 +121,27 @@ async def insert_log(log: LogModel, db: Session = Depends(get_database)):
         return { 'response': 'Failed to add log.', 'status_code': 403 }
 
 
+@app.get('/retrieve_dashboard_data')
+async def retrieve_dashboard_data(user_id: int, db: Session = Depends(get_database)):
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+        average_turbidity = db.query(func.avg(Log.turbidity)).filter(Log.record_owner == user_id).scalar()
+        average_ph = db.query(func.avg(Log.ph)).filter(Log.record_owner == user_id).scalar()
+        average_tds = db.query(func.avg(Log.tds)).filter(Log.record_owner == user_id).scalar()
+        average_ec = db.query(func.avg(Log.ec)).filter(Log.record_owner == user_id).scalar()
+
+        payload = {}
+        payload.update({ 'user_data': user })
+        payload.update({ 'avg_turbidity': average_turbidity })
+        payload.update({ 'average_ph': average_ph })
+        payload.update({ 'average_tds': average_tds })
+        payload.update({ 'average_ec': average_ec })
+
+        return { 'payload': payload, 'status_code': 200 }
+    except:
+        return { 'response': 'Error retrieving data.', 'status_code': 400 }
+
+
 @app.get('/all_entries')
 async def retrieve_entries(user_id: int, db: Session = Depends(get_database)):
     try:
@@ -110,3 +150,23 @@ async def retrieve_entries(user_id: int, db: Session = Depends(get_database)):
         return { 'payload': entries, 'status_code': 200 }
     except:
         return { 'response': 'Error retrieving data.', 'status_code': 400 }
+    
+
+@app.get('/generate_dummy')
+async def generate_dummy(record_owner: int, db: Session = Depends(get_database)):
+    try:
+        for x in range(20):
+            new_entry = Log()
+
+            new_entry.ph = rd.randint(10, 20)
+            new_entry.turbidity = rd.randint(10, 20)
+            new_entry.tds = rd.randint(10, 20)
+            new_entry.ec = rd.randint(10, 20)
+            new_entry.record_owner = record_owner
+
+            db.add(new_entry)
+            db.commit()
+
+        return { 'response': 'Generation completed.', 'status_code': 200 }
+    except:
+        return { 'response': 'Generation Failed.', 'status_code': 400 }

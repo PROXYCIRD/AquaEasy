@@ -3,16 +3,19 @@
         <h1>Profile</h1>
     
         <div id="profile-details">
-            <h4>Name: Juan Dela Cruz</h4>
-            <h4>Email: juandelacruz@example.com</h4>
-            <h4>Contact Number: 099999999999</h4>
+            <h4>Name: {{ user_data.first_name }} {{ user_data.last_name }}</h4>
+            <h4>Email: {{ user_data.email }}</h4>
+            <h4>Contact: {{ user_data.contact }}</h4>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'ProfilePage'
+    name: 'ProfilePage',
+    props: {
+        user_data: {}
+    }
 }
 </script>
 

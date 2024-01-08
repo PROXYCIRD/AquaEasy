@@ -1,7 +1,7 @@
 <template>
     <div id="container">
         <div id="login-panel">
-            <h1>LOGIN</h1>
+            <h1>{{ message }}</h1>
             <h4>Water Quality Monitoring</h4>
 
             <div id="login-form">
@@ -28,33 +28,35 @@
 export default {
     name: 'LoginPage',
     methods: {
-        async login(){
-            const response = await fetch(`http://127.0.0.1:8000/login?username=${this.username}&password=${this.password}`, {
-            // const response = await fetch('https://aquaeasy.onrender.com/register', {
+        async login() {
+            try {
+                const response = await fetch(`https://aquaeasy.onrender.com/login?username=${this.username}&password=${this.password}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            })
+                });
 
-            if(response.ok){
-                const responseData = await response.json();
-                console.log(responseData.response);
+                if (response.ok) {
+                    const responseData = await response.json();
 
-                if (responseData.response == 'Login successful.'){
-                    this.$router.push('/Dashboard');
+                    if (responseData && responseData.response === 'Login successful.') {
+                        this.$router.push({ name: 'dashboard', params: { user_id: responseData.user_data.id } });
+                    } else {
+                        this.message = 'LOGIN FAILED.';
+                        setTimeout(() => { this.message = 'LOGIN'}, 2000);
+                    }
+                } else {
+                    console.log('Login Failed. Status:', response.status);
                 }
-                else {
-                    console.log('Failed');
-                }
-            }
-            else {
-                console.log(`Request failed with status ${response.status}`);
+            } catch (error) {
+                console.error('An error occurred during login:', error.message);
             }
         }
     },
     data(){
         return {
+            message: 'LOGIN',
             username: '',
             password: ''
         }

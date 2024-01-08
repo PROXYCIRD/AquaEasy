@@ -22,17 +22,17 @@
 
             <div class="nav-link">
                 <img src="" alt="" class="nav-link-icon">
-                <h4 @click="changeComponent('ProfilePage')">Profile</h4>
+                <h4 @click="accessProfile()">Profile</h4>
             </div>
 
             <div class="nav-link">
                 <img src="" alt="" class="nav-link-icon">
-                <h4 @click="this.$router.push('Login')">Log Out</h4>
+                <h4 @click="this.$router.push('/login')">Log Out</h4>
             </div>
         </div>
 
         <div id="main-content">
-            <component :is="currentComponent" />
+            <component :is="currentComponent" :user_data="this.user_data" />
         </div>
     </div>
 </template>
@@ -56,13 +56,39 @@ export default {
     methods: {
         changeComponent(componentName){
             this.currentComponent = componentName;
+        },
+        accessProfile(){
+            this.currentComponent = 'ProfilePage';
+        },
+        async retrieve_dashboard_data(){
+            // const response = await fetch(`http://127.0.0.1:8000/retrieve_dashboard_data?user_id=${this.user_id}`);
+            const response = await fetch(`https://aquaeasy.onrender.com/retrieve_dashboard_data?user_id=${this.user_id}`);
+            const data = await response.json();
+
+            if (!response.ok){
+                console.log('Failed.');
+            }
+            else{
+                this.user_data = data.payload.user_data;
+                console.log(this.user_data);
+            }            
         }
     },
+    props: ['user_id'],
     data(){
         return {
-            currentComponent: 'HistoricalData'
+            user_data: [],
+            currentComponent: 'FaqPage',
+            turbidity_data: [],
+            humidity_data: [],
+            tds_data: [],
+            ec_data: []
         }
-    }
+    },
+    mounted() {
+        console.log(this.user_id);
+        this.retrieve_dashboard_data();
+    },
 }
 </script>
 

@@ -14,8 +14,11 @@
                 <h4>Confirm Password</h4>
                 <input type="password" placeholder="Confirm your password..." v-model="confirm">
 
-                <h4>Full Name</h4>
-                <input type="text" placeholder="Enter your full name..." v-model="fullname">
+                <h4>First Name</h4>
+                <input type="text" placeholder="Enter your first name..." v-model="first_name">
+
+                <h4>Last Name</h4>
+                <input type="text" placeholder="Enter your last name..." v-model="last_name">
 
                 <h4>Email Address</h4>
                 <input type="text" placeholder="Enter your email..." v-model="email">
@@ -36,13 +39,21 @@ export default {
     name: 'RegisterPage',
     methods: {
         async register(){
-            const response = await fetch('http://127.0.0.1:8000/register', {
-            // const response = await fetch('https://aquaeasy.onrender.com/register', {
+            // const response = await fetch('http://127.0.0.1:8000/register', {
+            const response = await fetch('https://aquaeasy.onrender.com/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 'username': this.username, 'password': this.password, 'confirm': this.confirm }),
+                body: JSON.stringify({
+                    'username': this.username,
+                    'password': this.password,
+                    'confirm': this.confirm,
+                    'first_name': this.first_name,
+                    'last_name': this.last_name,
+                    'contact': this.contact,
+                    'email': this.email
+                }),
             })
 
             if(response.ok){
@@ -65,7 +76,11 @@ export default {
         return {
             username: '',
             password: '',
-            confirm: ''
+            confirm: '',
+            first_name: '',
+            last_name: '',
+            contact: '',
+            email: ''
         }
     }
 }
