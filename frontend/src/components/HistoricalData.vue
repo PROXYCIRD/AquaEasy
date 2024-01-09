@@ -27,7 +27,8 @@ export default {
     name: 'HistoricalData',
     methods: {
         async retrieve_data(){
-            const response = await fetch(`http://127.0.0.1:8000/all_entries?user_id=${this.user_data.id}`);
+            const response = await fetch(`https://aquaeasy.onrender.com/all_entries?user_id=${this.user_data.id}`);
+            // const response = await fetch(`http://127.0.0.1:8000/all_entries?user_id=${this.user_data.id}`);
             const data = await response.json();
 
             if (!response.ok){
