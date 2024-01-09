@@ -78,7 +78,7 @@ export default {
     data(){
         return {
             user_data: [],
-            currentComponent: 'FaqPage',
+            currentComponent: 'AnalysisComponent',
             turbidity_data: [],
             humidity_data: [],
             tds_data: [],
