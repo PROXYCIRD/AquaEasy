@@ -21,7 +21,7 @@
                 <input type="text" placeholder="Enter your last name..." v-model="last_name">
 
                 <h4>Email Address</h4>
-                <input type="text" placeholder="Enter your email..." v-model="email">
+                <input type="email" placeholder="Enter your email..." v-model="email">
 
                 <h4>Contact Number</h4>
                 <input type="text" placeholder="Enter your contact number..." v-model="contact">
