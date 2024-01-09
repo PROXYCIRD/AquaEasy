@@ -18,6 +18,7 @@
 
             <div id="interactivity-section">
                 <button @click="login()">Login</button>
+                <br><br>
                 <a id="sign-up" @click="() => { this.$router.push('/register') }">Don't have an account? Sign up.</a>
             </div>
         </div>
