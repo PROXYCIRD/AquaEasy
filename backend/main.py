@@ -48,10 +48,10 @@ class RegisterModel(BaseModel):
 
 
 class LogModel(BaseModel):
-    turbidity: int
-    humidity: int
-    tds: int
-    ec: int
+    turbidity: float
+    humidity: float
+    tds: float
+    ec: float
     user_id: int
 
 
