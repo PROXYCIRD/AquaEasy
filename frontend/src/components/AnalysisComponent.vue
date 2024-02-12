@@ -55,8 +55,8 @@ export default {
             datasets: [{
             label: 'Average Turbidity',
             data: [10, 15, 7, 12, 8],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(20, 151, 221, 0.7)',
+            borderColor: 'rgba(20, 151, 221, 0.7)',
             borderWidth: 1,
             }],
         },
@@ -79,8 +79,8 @@ export default {
             datasets: [{
             label: 'Average Humidity',
             data: [16, 15, 14, 14, 18],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(20, 151, 221, 0.7)',
+            borderColor: 'rgba(20, 151, 221, 0.7)',
             borderWidth: 1,
             }],
         },
@@ -103,8 +103,8 @@ export default {
             datasets: [{
             label: 'Average TDS',
             data: [13, 12, 7, 5, 20],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(20, 151, 221, 0.7)',
+            borderColor: 'rgba(20, 151, 221, 0.7)',
             borderWidth: 1,
             }],
         },
@@ -126,7 +126,7 @@ export default {
           labels: ['Label 1', 'Label 2', 'Label 3'],
           datasets: [{
             data: [30, 40, 30], // Adjust data values as needed
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // Adjust colors as needed
+            backgroundColor: ['#1497DD', '#1497DD', '#1497DD'], // Adjust colors as needed
           }],
         },
         options: {
@@ -153,7 +153,7 @@ export default {
 }
 
 #charts-container::-webkit-scrollbar-thumb {
-  background-color: #4CAF50;
+  background-color: #1497DD;
   border-radius: 6px;
 }
 

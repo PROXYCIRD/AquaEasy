@@ -105,7 +105,7 @@ export default {
     #navbar {
         width: 220px;
         min-width: 220px;
-        background-color: #333;
+        background-color: #1497DD;
         color: white;
         padding: 20px;
         box-sizing: border-box;

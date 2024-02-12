@@ -93,7 +93,7 @@ export default {
 }
 
 .question::-webkit-scrollbar-thumb {
-  background-color: #4CAF50;
+  background-color: #1497DD;
   border-radius: 6px;
 }
 

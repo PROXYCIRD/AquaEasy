@@ -64,6 +64,15 @@ async def show_users(db: Session = Depends(get_database)):
         return { 'response': 'User Retrieval Failed', 'status_code': 200 }
     
 
+@app.get('/retrieve_user_data')
+async def retrieve_user_data(user_id: int, db: Session = Depends(get_database)):
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+        return { 'response': 'User Retrieval Success', 'user': user, 'status_code': 200 }
+    except:
+        return { 'response': 'User Retrieval Failed', 'status_code': 200 }
+
+
 @app.post('/login')
 async def login(username: str, password: str, db: Session = Depends(get_database)):
     try:
@@ -96,7 +105,7 @@ async def register(user: RegisterModel, db: Session = Depends(get_database)):
                 db.add(new_user)
                 db.commit()
 
-                return { 'response': 'Registration successful.', 'status_code': 200 }
+                return { 'response': 'Registration successful.', 'status_code': 200, 'new_user_id': new_user.id }
         else:
             return { 'response': 'User already exists.', 'status_code': 403 }
     except:
