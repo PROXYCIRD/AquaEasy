@@ -6,16 +6,18 @@
             <table>
                 <th>Date and Time</th>
                 <th>Turbidity</th>
-                <th>Humidity</th>
+                <th>PH</th>
                 <th>TDS</th>
-                <th>EC</th>
+                <th>Temperature</th>
+                <th>Power Life</th>
 
                 <tr v-for="log in logs" :key="log">
                     <td>{{ log.date_created }}</td>
-                    <td>{{ log.turbidity }}</td>
-                    <td>{{ log.ph }}</td>
-                    <td>{{ log.tds }}</td>
-                    <td>{{ log.ec }}</td>
+                    <td>{{ log.turbidity }}NTU</td>
+                    <td>{{ log.ph }}pH</td>
+                    <td>{{ log.tds }}pn</td>
+                    <td>{{ log.ec }}°C</td>
+                    <td>{{ log.battery }}%</td>
                 </tr>
             </table>
         </div>
