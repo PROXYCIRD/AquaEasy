@@ -9,7 +9,7 @@ import DashboardPage from './components/DashboardPage.vue';
 const app = createApp(App);
 
 const routes = [
-  { path: '/login', component: LoginPage },
+  { path: '/', component: LoginPage },
   { path: '/register', component: RegisterPage },
   { path: '/dashboard/:user_id', component: DashboardPage, name: 'dashboard', props: true },
 ];

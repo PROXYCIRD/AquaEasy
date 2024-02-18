@@ -10,6 +10,7 @@
                 <th>TDS</th>
                 <th>Temperature</th>
                 <th>Power Life</th>
+                <th></th>
 
                 <tr v-for="log in logs" :key="log">
                     <td>{{ log.date_created }}</td>
@@ -18,6 +19,7 @@
                     <td>{{ log.tds }}pn</td>
                     <td>{{ log.ec }}°C</td>
                     <td>{{ log.battery }}%</td>
+                    <td><button @click="delete_data(log.id)">Delete</button></td>
                 </tr>
             </table>
         </div>
@@ -39,6 +41,17 @@ export default {
             else{
                 this.logs = data.payload;
             }            
+        },
+
+        async delete_data(entry_id){
+            const response = await fetch(`https://aquaeasy.onrender.com/delete_entry?entry_id=${entry_id}`);
+
+            if (!response.ok){
+                console.log('Failed.');
+            }
+            else{
+                this.retrieve_data();
+            }
         }
     },
     props: {
@@ -50,6 +63,8 @@ export default {
         }
     },
     mounted(){
+        this.retrieve_data();
+
         setInterval(() => {
             this.retrieve_data();
         }, 30000)

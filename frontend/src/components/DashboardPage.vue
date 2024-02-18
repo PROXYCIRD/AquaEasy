@@ -12,7 +12,12 @@
 
             <div class="nav-link">
                 <img src="" alt="" class="nav-link-icon">
-                <h4 @click="changeComponent('HistoricalData')">Archive</h4>
+                <h4 @click="changeComponent('HistoricalData')">Logs</h4>
+            </div>
+
+            <div class="nav-link">
+                <img src="" alt="" class="nav-link-icon">
+                <h4 @click="changeComponent('ChangeLogs')">Archive</h4>
             </div>
 
             <div class="nav-link">
@@ -43,6 +48,7 @@ import AnalysisComponent from './AnalysisComponent.vue';
 import FaqPage from './FaqPage.vue';
 import ProfilePage from './ProfilePage.vue';
 import LoginPage from './LoginPage.vue';
+import ChangeLogs from './ChangeLogs.vue';
 
 export default {
     name: 'DashboardPage',
@@ -51,7 +57,8 @@ export default {
         AnalysisComponent,
         FaqPage,
         LoginPage,
-        ProfilePage
+        ProfilePage,
+        ChangeLogs
     },  
     methods: {
         changeComponent(componentName){
