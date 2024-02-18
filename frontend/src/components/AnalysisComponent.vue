@@ -9,7 +9,7 @@
             </div>
             
             <div class="chart-container">
-                <h2>Humidity</h2>
+                <h2>pH</h2>
                 <canvas ref="barChart2" width="1000" height="300"></canvas>
             </div>
 
