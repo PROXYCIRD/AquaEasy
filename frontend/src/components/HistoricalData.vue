@@ -64,10 +64,10 @@ export default {
     },
     mounted(){
         this.retrieve_data();
-
+        
         setInterval(() => {
             this.retrieve_data();
-        }, 30000)
+        }, 70000)
     }
 }
 </script>

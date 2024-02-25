@@ -10,6 +10,7 @@
                 <th>TDS</th>
                 <th>Temperature</th>
                 <th>Power Life</th>
+                <th>Date Deleted</th>
 
                 <tr v-for="log in logs" :key="log">
                     <td>{{ log.date_created }}</td>
@@ -18,6 +19,7 @@
                     <td>{{ log.tds }}pn</td>
                     <td>{{ log.ec }}°C</td>
                     <td>{{ log.battery }}%</td>
+                    <td>{{ log.date_deleted }}</td>
                 </tr>
             </table>
         </div>
@@ -30,7 +32,7 @@ export default {
     methods: {
         async retrieve_data(){
             const response = await fetch(`https://aquaeasy.onrender.com/all_deleted_entries?user_id=${this.user_data.id}`);
-            // const response = await fetch(`http://127.0.0.1:8000/all_entries?user_id=${this.user_data.id}`);
+            // const response = await fetch(`http://127.0.0.1:8000/all_deleted_entries?user_id=${this.user_data.id}`);
             const data = await response.json();
 
             if (!response.ok){
@@ -50,9 +52,11 @@ export default {
         }
     },
     mounted(){
+        this.retrieve_data();
+        
         setInterval(() => {
             this.retrieve_data();
-        }, 30000)
+        }, 70000)
     }
 }
 </script>
