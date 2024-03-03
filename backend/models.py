@@ -17,6 +17,7 @@ class User(Base):
     log_records = relationship('Log', back_populates='owner')
     deleted_log_records = relationship('DeletedLog', back_populates='deleted_record_owner')
 
+
 class Log(Base):
     __tablename__ = 'logs'
 
